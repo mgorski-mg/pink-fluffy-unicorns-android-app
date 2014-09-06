@@ -1,12 +1,15 @@
 package pl.lizard.project.fluffyunicorns.music.service;
 
 import android.app.Service;
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 import pl.lizard.project.fluffyunicorns.R;
 
@@ -17,6 +20,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
 	private final IBinder mBinder = new ServiceBinder();
 	private MediaPlayer player;
+	private WallpaperManager wallpaperManager;
 
 	public class ServiceBinder extends Binder {
 
@@ -33,7 +37,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		wallpaperManager = WallpaperManager.getInstance(this);
 		player = MediaPlayer.create(this, R.raw.pink_fluffy_unicorns);
 		player.setOnErrorListener(this);
 
@@ -43,7 +47,6 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 		}
 
 		player.setOnErrorListener(new OnErrorListener() {
-
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 
 				onError(player, what, extra);
@@ -55,6 +58,11 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		player.start();
+		try {
+			wallpaperManager.setResource(R.raw.pink_fluffy_unicorn_wallpaper);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return START_STICKY;
 	}
 
