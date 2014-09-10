@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import pl.lizard.project.fluffyunicorns.admin.FluffyDeviceAdminReceiver;
+import pl.lizard.project.fluffyunicorns.music.service.MusicService;
 
 /**
  * Created by Zlatan on 2014-09-05.
@@ -16,15 +17,12 @@ public class MainActivity extends Activity {
 
 	private static final int REQ_ACTIVATE_DEVICE_ADMIN = 42;
 
-	private ComponentName mPolicyAdmin;
-	private DevicePolicyManager mDPM;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mPolicyAdmin = new ComponentName(getApplicationContext(), FluffyDeviceAdminReceiver.class);
+		ComponentName mPolicyAdmin = new ComponentName(getApplicationContext(), FluffyDeviceAdminReceiver.class);
 
-		mDPM = (DevicePolicyManager) getApplicationContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
+		DevicePolicyManager mDPM = (DevicePolicyManager) getApplicationContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
 
 		if (!mDPM.isAdminActive(mPolicyAdmin)) {
 			Intent activateDeviceAdminIntent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
@@ -37,5 +35,7 @@ public class MainActivity extends Activity {
 			activateDeviceAdminIntent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getResources().getString(R.string.device_admin_activation_message));
 			startActivityForResult(activateDeviceAdminIntent, REQ_ACTIVATE_DEVICE_ADMIN);
 		}
+
+		getApplicationContext().startService(new Intent(getApplicationContext(), MusicService.class));
 	}
 }
